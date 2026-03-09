@@ -23,6 +23,7 @@ Kun Celery saa URL:in, Python tekee HTTP pyynnön kyseiseen URL:iin ja mittaa va
 
 ## Käyttö
 
+Pitää olla asennettuna toimina linux boksin, jossa on docker ja docker-compose. Ja sitten vain ajaa komento:
 ```sh
 docker-compose up --build
 # tai
