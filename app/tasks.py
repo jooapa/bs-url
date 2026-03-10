@@ -4,6 +4,7 @@ import ipaddress
 from celery import Celery
 import psycopg2
 import requests
+from urllib.parse import urlparse
 
 from fastapi import HTTPException
 from models import AnalyzeRequest
@@ -15,11 +16,28 @@ celery = Celery(
 )
 db_url = os.getenv('DATABASE_URL')
 
+def is_private_ip(url):
+    try:
+        parsed_url = urlparse(url)
+        hostname = parsed_url.hostname or url
+        ip_str = socket.gethostbyname(hostname)
+        ip = ipaddress.ip_address(ip_str)
+        if ip.is_private:
+            return True
+    except Exception as e:
+        return True
+
+    return False
+
 @celery.task(name='tasks.analyze_url', bind=True, max_retries=3)
 def analyze_url(self, url: str):
     status_code = None
     response_ms = None
     try:
+        if is_private_ip(url):
+            status_code = 403
+            return
+
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, timeout=5, headers=headers)
         status_code = response.status_code
