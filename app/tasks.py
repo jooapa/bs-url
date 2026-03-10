@@ -15,22 +15,8 @@ celery = Celery(
 )
 db_url = os.getenv('DATABASE_URL')
 
-def is_private_ip(url):
-    try:
-        hostname = socket.gethostbyname(socket.gethostbyname(url))
-        ip = ipaddress.ip_address(hostname)
-        if ip.is_private:
-            return True
-    except Exception as e:
-        return True
-
-    return False
-
 @celery.task(name='tasks.analyze_url', bind=True, max_retries=3)
 def analyze_url(self, url: str):
-    if is_private_ip(url):
-        return {"error": "Requests to private IPs are not allowed."}
-
     status_code = None
     response_ms = None
     try:
