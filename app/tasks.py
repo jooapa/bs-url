@@ -5,6 +5,7 @@ from celery import Celery
 import psycopg2
 import requests
 
+from fastapi import HTTPException
 from models import AnalyzeRequest
 
 celery = Celery(
@@ -54,7 +55,7 @@ def analyze_url(self, url: str):
 
 def analyze_urls(request: AnalyzeRequest):
     if len(request.urls) > 10:
-        return {"error": "Äläpä pistele kymmentä enempää näitä. Mun CPU ei pysty händlää tätä"}
+        raise HTTPException(status_code=400, detail="Äläpä pistele kymmentä enempää näitä. Mun CPU ei pysty händlää tätä")
 
     urls = [url for url in request.urls if url.lower(
     ).startswith(("http://", "https://"))]

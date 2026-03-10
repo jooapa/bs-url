@@ -19,7 +19,6 @@ Kun Celery saa URL:in, Python tekee HTTP pyynnön kyseiseen URL:iin ja mittaa va
 ### Virheiden käsittely
 - Jos URL string ei ala "http://" tai "https://", se heitetään pois, ja sitä ei tarkisteta.
 - Jos nettisivu ei vastaa, python yrittää uudestaan 2^(yrityksen määrän) sekunnin päästä
-- Sisäiset IP-osoitteet hylätään turvallisuussyistä
 
 ## Käyttö
 
