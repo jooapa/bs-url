@@ -75,7 +75,7 @@ Ympäristömuuttujia on käytetty `.env`-tiedostossa. *"En nyt pistänyt .env-ti
 
 Docker-composessa myös tietokannan, Celeryn ja Rediksen URL:it on määritelty ympäristömuuttujina.
 
-SQL-injektioiden ei pitäisi olla mahdollisia, koska käytän SQL-komennossa turvallista parametrisointia, joka käsittelee arvot turvallisesti [tasks.py](./app/tasks.py)-tiedostossa.
+SQL-injektioiden ei pitäisi olla mahdollisia, koska käytän SQL-komennossa turvallista parametrisointia, joka käsittelee arvot turvallisesti [tasks.py](./app/tasks.py#L52)-tiedostossa.
 
 ## Enemmän aikaa
 
